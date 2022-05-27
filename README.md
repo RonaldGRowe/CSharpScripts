@@ -11,4 +11,4 @@
 * working on reducing runtime
 ### Learned
 * can complete many more operations in shorter time than [Python scripts](https://github.com/RonaldGRowe/python_programs/blob/main/README.md)
-* 
+
