@@ -1,10 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Diagnostics;
-
-List<int> primeList = new List<int> {2};
+List<int> factorList = new() { 2};
+List<int> primeList = new() { 2};
 int maxNum;
-int startNum = 3;
 
 Stopwatch stopWatch = new Stopwatch();
 
@@ -14,33 +13,46 @@ Console.Write("Enter Whole Number Greater than 1: ");
 maxNum = Convert.ToInt32(Console.ReadLine());
 stopWatch.Start();
 
-while (startNum < maxNum)
+foreach (int startNum in Enumerable.Range(1,maxNum-2).Select(x => x+2))
 {
-    int z = 0;
-    foreach (int d in primeList)
+    foreach (int p in primeList.Skip(1+primeList.IndexOf(factorList[^1])))
     {
-        if (startNum % d == 0)
+        if (p >= Math.Sqrt(startNum) + 1)
         {
-            startNum += 2;
             break;
         }
         else
         {
-            z++;
+            factorList.Add(p);
         }
     }
-    if (z == primeList.Count)
+    foreach (int f in factorList)
+    {
+        if (startNum % f == 0)
+        {
+            break ;
+        }
+        else
+        {
+            if (f == factorList[^1])
+            {
+                primeList.Add(startNum);
+                break ;
+            }
+        }
+    }
+    if (factorList.Count == 0)
     {
         primeList.Add(startNum);
-        startNum += 2;
     }
+    
 }
 
 foreach (int p in primeList)
 {
     Console.Write(p+", ");
 }
-Console.WriteLine("\n"+primeList.Count+"Prime Numbers");
+Console.WriteLine("\n"+primeList.Count+" Prime Numbers");
 
 stopWatch.Stop();
 TimeSpan ts = stopWatch.Elapsed;
